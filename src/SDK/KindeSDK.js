@@ -97,7 +97,7 @@ export default class KindeSDK {
         // Checking for case token still valid
         const token = await Storage.getToken();
         if (token && !url) {
-            if (this.isAuthenticated) {
+            if (await this.isAuthenticated) {
                 return token;
             }
 
@@ -232,7 +232,8 @@ export default class KindeSDK {
     }
 
     async getClaim(keyName, tokenType = 'accessToken') {
-        return this.getClaims(tokenType)[keyName];
+        const claims = await this.getClaims(tokenType);
+        return claims[keyName];
     }
 
     async getPermissions() {
